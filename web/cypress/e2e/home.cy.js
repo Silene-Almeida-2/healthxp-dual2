@@ -1,8 +1,8 @@
 describe('home', () => {
   it('webapp deve estar online', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('/')
 
     cy.title()
-    .should('equal', 'Health eXperience | Exclusivo para treinamentos na QAx')
+      .should('equal', 'Health eXperience | Exclusivo para treinamentos na QAx')
   })
 })

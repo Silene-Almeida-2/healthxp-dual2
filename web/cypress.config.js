@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+require('dotenv').config()
 
 const { Pool } = require('pg')
 
@@ -9,11 +10,28 @@ const dbConfig = {
   database: 'rndygbzq',
   port: 5432
 }
+
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', {
+
+        selectStudentIn(studentEmail) {
+          return new Promise(function (resolve, reject) {
+            const pool = new Pool(dbConfig)
+
+            const query = 'SELECT id FROM students WHERE email = $1;'
+
+            pool.query(query, [studentEmail], function (error, result) {
+              if (error) {
+                reject({ error: error })
+              }
+              resolve({ success: result })
+              pool.end()
+            })
+          })
+        },
 
         deleteStudent(studentEmail) {
           return new Promise(function (resolve, reject) {
@@ -30,6 +48,7 @@ module.exports = defineConfig({
             })
           })
         },
+
         resetStudent(student) {
           return new Promise(function (resolve, reject) {
             const pool = new Pool(dbConfig)
@@ -59,6 +78,10 @@ module.exports = defineConfig({
       })
 
     },
+    baseUrl: process.env.BASE_URL,
+    env: {
+      apiHelper: process.env.API_HELPER
+    }
   }
 });
 

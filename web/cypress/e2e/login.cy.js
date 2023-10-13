@@ -6,11 +6,11 @@ import studentPage from '../support/pages/StudentPage'
 describe('login', () => {
 
 
-    it('deve logar com o perfil do asmin', () => {
+    it('deve logar com o perfil do admin', () => {
         const user = users.admin
 
         loginPage.doLogin(user)
-        studentPage.navbar.userLoggedIn(user.name)              
+        studentPage.navbar.userLoggedIn(user.name)
     })
 
     it('não deve logar com senha incorreta', () => {

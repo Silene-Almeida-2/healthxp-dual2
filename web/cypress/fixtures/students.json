@@ -5,7 +5,7 @@
         "age": "28",
         "weight": "72",
         "feet_tall": "1.80"
-    },    
+    },
     "duplicate": {
         "name": "Bruce Wayne",
         "email": "bruce@wayne.com",
@@ -13,23 +13,39 @@
         "weight": "72",
         "feet_tall": "1.80"
     },
-
-"remove": {
-    "name": "Falcão Delete",
-    "email": "falcao@gmail.com",
-    "age": "28",
-    "weight": "72",
-    "feet_tall": "1.80"
-},
-
-"required": {
-    "name": "",
-    "email": "",
-    "age": "",
-    "weight": "",
-    "feet_tall": ""
-}
-
-
-
+    "remove": {
+        "name": "Falcão Delete",
+        "email": "falcao@gmail.com",
+        "age": "28",
+        "weight": "72",
+        "feet_tall": "1.80"
+    },
+    "required": {
+        "name": "",
+        "email": "",
+        "age": "",
+        "weight": "",
+        "feet_tall": ""
+    },
+    "under_16_years": {
+        "name": "Vera Higgins",
+        "email": "ibpilka@ov.mt",
+        "age": "15",
+        "weight": "65",
+        "feet_tall": "1.69"
+    },
+    "inv_weight": {
+        "name": "Rena McKinney",
+        "email": "putab@jacob.mp",
+        "age": "16",
+        "weight": "-1",
+        "feet_tall": "1.75"
+    },
+    "inv_feet_tall": {
+        "name": "Clarence Morton",
+        "email": "ci@kapawaj.lb",
+        "age": "16",
+        "weight": "70",
+        "feet_tall": "0"
+    }
 }
