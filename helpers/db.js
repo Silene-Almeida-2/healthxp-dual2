@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+const ShortUniqueId = require('short-unique-id')
+
 const { Pool } = require('pg')
 
 const pool = new Pool({
@@ -13,28 +15,33 @@ const pool = new Pool({
 const deleteAndCreateStudent = (req, res) => {
 
   const student = req.body
-  
-  if (student.name ==='' || !student) {
-    return res.status(400).json({massage: 'Name is required'})
-  }
 
-  const query = `
-      WITH add AS (
-        INSERT INTO students (name, email, age, weight, feet_tall)
-        VALUES ($1, $2, $3, $4, $5)
-      )
-      DELETE FROM students WHERE email = $2;
+  const queryDelete = `
+      DELETE FROM students WHERE email = $1;
     `
+
+  const queryInsert = `
+      INSERT INTO students (name, email, age, weight, feet_tall)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id as student_id;
+    `
+
   const values = [
     student.name, student.email, student.age, student.weight, student.feet_tall
   ]
 
-  pool.query(query, values, function (error, result) {
+  pool.query(queryDelete, [student.email], function (error, result) {
     if (error) {
       return res.status(500).json(error)
     }
-    res.status(201).json(result)
+    pool.query(queryInsert, values, function (error, result) {
+      if (error) {
+        return res.status(500).json(error)
+      }
+      res.status(201).json({ student_id: result.rows[0].student_id })
+    })
   })
+
 }
 
 const deleteStudentByEmail = (req, res) => {
@@ -49,24 +56,27 @@ const deleteStudentByEmail = (req, res) => {
     }
     res.status(204).end()
   })
+
 }
 
 const insertEnrollByEmail = (req, res) => {
 
   const { email, plan_id, price } = req.body
 
+  const uid = new ShortUniqueId({ length: 6 });
+
   const query = `
-  INSERT INTO enrollments (enrollment_code, student_id, plan_id, credit_card, status, price)
-  SELECT
-  'XPTO123' as enrollment_code,
-  id as student_id, 
-  $2 as plan_id,
-  '4242' as credit_card,
-   true as status,
-  $3 as price
-  FROM students
-  WHERE email = $1;
-  
+    INSERT INTO enrollments (enrollment_code, student_id, plan_id, credit_card, status, price)
+    SELECT
+    '${uid.rnd().toUpperCase()}' as enrollment_code,
+    id as student_id,
+    $2 as plan_id,
+    '4242' as credit_card,
+    true as status,
+    $3 as price
+    FROM students
+    WHERE email = $1
+    RETURNING enrollment_code;
   `
 
   const values = [email, plan_id, price]
@@ -75,10 +85,9 @@ const insertEnrollByEmail = (req, res) => {
     if (error) {
       return res.status(500).json(error)
     }
-    res.status(201).end()
+    res.status(201).json({enrollment_code: result.rows[0].enrollment_code})
   })
 }
-
 
 module.exports = {
   deleteAndCreateStudent,
