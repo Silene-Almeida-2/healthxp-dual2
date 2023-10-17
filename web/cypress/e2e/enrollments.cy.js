@@ -41,3 +41,4 @@ describe('matriculas', ()=> {
         enrollsPage.popup.haveText('O aluno já possui matrícula cadastrada!')
     })
 })
+
