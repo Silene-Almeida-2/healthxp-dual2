@@ -11,3 +11,5 @@ Bem-vindo ao repositório de exemplos e práticas relacionadas a testes automati
 - **Arquitetura Limpa:** Destaques sobre a importância de um código bem estruturado para facilitar a manutenção do sistema.
 
 ![2023-12-26](https://github.com/Silene-Almeida-2/healthxp-dual2/assets/138931859/52e054c1-5d55-4206-a768-456f4be9433e)
+
+![2023-12-26 (1)](https://github.com/Silene-Almeida-2/healthxp-dual2/assets/138931859/84120739-18b1-4fd6-90ba-859015015036)
